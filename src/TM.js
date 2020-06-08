@@ -28,6 +28,7 @@ class TM extends Component {
       sadrzajTrake: ["A"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
+      trenutnaPozicijaGlave: 1,
     };
   }
 
@@ -92,11 +93,9 @@ class TM extends Component {
           <SadrzajTrake
             sadrzajTrake={this.state.sadrzajTrake}
             setSadrzajTrake={this.setSadrzajTrake}
-            tapeLetters={this.state.tapeLetters}
-            availableLetters={this.state.letters}
-            currentTapePosition={this.state.currentTapePosition}
-            setCurrentTapePosition={this.setCurrentTapePosition}
-            setTapeLetters={this.setTapeLettersAndShiftTapePosition}
+            tapeSimboli={this.state.tapeSimboli}
+            availableSimboli={this.state.simboli}
+            trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
           />
         </div>
       </div>

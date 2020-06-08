@@ -9,7 +9,7 @@ class MachineReadingHead extends Component {
           width: "200px",
           height: "80px",
           position: "absolute",
-          left: "calc(50% + 30px)",
+          alignContent: "center",
         }}
       >
         <svg
@@ -21,7 +21,7 @@ class MachineReadingHead extends Component {
           <polygon
             points="20,2 50,98, 80,2"
             style={{
-              fill: "white",
+              fill: "yellow",
               stroke: "black",
             }}
           />
