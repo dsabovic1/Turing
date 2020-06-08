@@ -5,22 +5,15 @@ import GlavaZaCitanje from "./GlavaZaCitanje";
 class SadrzajTrake extends Component {
   constructor(props) {
     super(props);
-    this.addSadrzajTrake = this.addSadrzajTrake.bind(this);
-    this.removeSadrzajTrake = this.removeSadrzajTrake.bind(this);
+    this.dodajSadrzajTrake = this.dodajSadrzajTrake.bind(this);
   }
 
-  addSadrzajTrake(sadrzaj) {
+  dodajSadrzajTrake(sadrzaj) {
     var str = this.refs.tekst.value;
     var ar = [];
     ar = str.split("");
     this.props.setSadrzajTrake(ar);
     console.log(ar);
-  }
-
-  removeSadrzajTrake() {
-    let newSimboli = this.props.simboli.slice();
-    newSimboli.pop();
-    this.props.postaviSimbole(newSimboli);
   }
 
   render() {
@@ -41,32 +34,15 @@ class SadrzajTrake extends Component {
               Sadržaj trake
             </h3>
             <input
-              defaultValue={this.props.sadrzajTrake}
+              defaultValue={this.props.sadrzajTrake.join("")}
               type="text"
               name="sadrzaj"
               ref="tekst"
             />
           </label>
-          <button value="Send" onClick={this.addSadrzajTrake}>
+          <button value="Send" onClick={this.dodajSadrzajTrake}>
             +
           </button>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <div
-            style={{ position: "relative", height: "140px", marginTop: "20px" }}
-          >
-            <Traka
-              sadrzajTrake={this.props.sadrzajTrake}
-              trenutnaPozicijaGlave={this.props.trenutnaPozicijaGlave}
-            />
-          </div>
         </div>
       </div>
     );

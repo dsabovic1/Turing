@@ -6,10 +6,9 @@ class MachineReadingHead extends Component {
       <div
         {...this.props}
         style={{
-          width: "200px",
-          height: "80px",
+          width: "120px",
+          height: "50px",
           position: "absolute",
-          alignContent: "center",
         }}
       >
         <svg
@@ -19,7 +18,7 @@ class MachineReadingHead extends Component {
           preserveAspectRatio="none"
         >
           <polygon
-            points="20,2 50,98, 80,2"
+            points="20,90,50,2,80,90"
             style={{
               fill: "yellow",
               stroke: "black",

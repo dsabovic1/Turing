@@ -10,7 +10,7 @@ class Kontrole extends Component {
 
     this.state = {
       intervalId: null,
-      brzina: 5,
+      brzina: 1,
     };
   }
 
@@ -67,6 +67,11 @@ class Kontrole extends Component {
           ) : (
             <Button big onClick={this.zaustavi} text="Zaustavi" />
           )}
+          <Button
+            big
+            onClick={this.izvrsiPrijelaz}
+            text="Izvrši jednu iteraciju"
+          />
           <div
             style={{
               margin: "10px",

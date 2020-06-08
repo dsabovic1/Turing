@@ -11,24 +11,17 @@ class Traka extends Component {
     };
   }
 
-  addLetter(toBeginning) {
-    let newTapeSimboli = this.props.tapeSimboli.slice();
-    if (toBeginning) newTapeSimboli.unshift(this.props.availableSimboli[0]);
-    else newTapeSimboli.push(this.props.availableSimboli[0]);
-    this.props.setTapeSimboli(newTapeSimboli, toBeginning ? 1 : 0);
-  }
   postaviSimbol(index, letter) {
-    let newTapeSimboli = this.props.tapeSimboli.slice();
-    newTapeSimboli[index] = letter;
-    this.props.setTapeSimboli(newTapeSimboli);
+    let noviSimboliTrake = this.props.tapeSimboli.slice();
+    noviSimboliTrake[index] = letter;
+    this.props.setTapeSimboli(noviSimboliTrake);
   }
 
   render() {
     return (
       <div
         style={{
-          position: "absolute",
-          top: "80px",
+          top: "50px",
         }}
       >
         <div
@@ -38,7 +31,7 @@ class Traka extends Component {
         >
           {this.props.sadrzajTrake.map((simbol, index) => {
             return (
-              <TapeLetter
+              <SadrzajTrake
                 active={this.props.trenutnaPozicijaGlave === index}
                 size={this.state.velicinaBloka}
                 index={index}
@@ -54,9 +47,9 @@ class Traka extends Component {
   }
 }
 
-function TapeLetter(props) {
+function SadrzajTrake(props) {
   return (
-    <TapeBlock size={props.size} active={props.active}>
+    <SimbolTrake size={props.size} active={props.active}>
       <ToggleButton
         value={props.simbol}
         values={props.simboli}
@@ -64,11 +57,11 @@ function TapeLetter(props) {
       >
         {props.letter}
       </ToggleButton>
-    </TapeBlock>
+    </SimbolTrake>
   );
 }
 
-function TapeBlock(props) {
+function SimbolTrake(props) {
   let backgroundColor = "#EEE";
   let border = "1px solid black";
 
@@ -76,22 +69,22 @@ function TapeBlock(props) {
   if (props.utility) backgroundColor = "rgba(0,0,0,0)";
   if (props.utility) border = "0";
   return (
-    <div
-      style={{
-        width: props.size + "px",
-        height: props.size + "px",
-        backgroundColor: backgroundColor,
-        fontSize: "20px",
-        borderRadius: "5px",
-        display: "flex",
-
-        padding: "5px",
-        border: border,
-        boxSizing: "border-box",
-      }}
-    >
-      <GlavaZaCitanje />
-      {props.children}
+    <div>
+      <div
+        style={{
+          width: props.size + "px",
+          height: props.size + "px",
+          backgroundColor: backgroundColor,
+          fontSize: "20px",
+          borderRadius: "5px",
+          padding: "5px",
+          border: border,
+          boxSizing: "border-box",
+        }}
+      >
+        {props.children}
+        {props.active ? <GlavaZaCitanje /> : ""}
+      </div>
     </div>
   );
 }

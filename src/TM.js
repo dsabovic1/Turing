@@ -4,6 +4,7 @@ import ListaSimbola from "./ListaSimbola";
 import ListaStanja from "./ListaStanja";
 import ListaPrijelaza from "./ListaPrijelaza";
 import Kontrole from "./Kontrole";
+import Traka from "./Traka";
 
 class TM extends Component {
   constructor(props) {
@@ -16,22 +17,39 @@ class TM extends Component {
     this.izvrsiPrijelaz = this.izvrsiPrijelaz.bind(this);
 
     this.state = {
-      stanja: ["q0"],
-      simboli: [0, 1],
+      stanja: ["q0", "q1"],
+      simboli: ["0", "1", "b"],
       prijelazi: [
         {
           trenutnoStanje: "q0",
           simbolNaTraci: "0",
           novoStanje: "q0",
-          noviSimbol: "0",
-          smjerKretanja: "L",
+          noviSimbol: "1",
+          smjerKretanja: "R",
+        },
+
+        {
+          trenutnoStanje: "q0",
+          simbolNaTraci: "1",
+          novoStanje: "q0",
+          noviSimbol: "1",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q0",
+          simbolNaTraci: "b",
+          novoStanje: "q1",
+          noviSimbol: "b",
+          smjerKretanja: "R",
         },
       ],
-      sadrzajTrake: ["A"],
+      sadrzajTrake: ["0", "1", "0", "1", "0", "1", "b"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
       trenutnaPozicijaGlave: 0,
+      status: "",
+      finalnoStanje: 1,
     };
   }
 
@@ -53,10 +71,31 @@ class TM extends Component {
 
   izvrsiPrijelaz() {
     let prijelaz = this.state.prijelazi.find((prijelaz) => {
-      return prijelaz;
+      return (
+        prijelaz.trenutnoStanje ===
+          this.state.stanja[this.state.indexTrenutnogStanja] &&
+        prijelaz.simbolNaTraci ===
+          this.state.sadrzajTrake[this.state.trenutnaPozicijaGlave]
+      );
     });
+    if (prijelaz === undefined) {
+      this.setState({
+        status: "Ne postoji prijelaz za trenutno stanje i simbol",
+      });
+    }
+    let noviNizSimbola = this.state.sadrzajTrake.slice();
+    noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
+    let novaPozicijaGlave =
+      this.state.trenutnaPozicijaGlave +
+      (prijelaz.smjerKretanja === "L" ? -1 : 1);
     this.setState({
       indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
+      sadrzajTrake: noviNizSimbola,
+      trenutnaPozicijaGlave: novaPozicijaGlave,
+      indexTrenutnogSimbola: this.state.simboli.indexOf(
+        this.state.sadrzajTrake[novaPozicijaGlave]
+      ),
+      indexSljedecegPrijelaza: this.state.prijelazi.indexOf(prijelaz),
     });
   }
 
@@ -86,22 +125,58 @@ class TM extends Component {
             postaviStanja={this.postaviStanja}
             indexTrenutnogStanja={this.state.indexTrenutnogStanja}
           />
-          <ListaPrijelaza
-            prijelazi={this.state.prijelazi}
-            stanja={this.state.stanja}
-            simboli={this.state.simboli}
-            postaviPrijelaze={this.postaviPrijelaze}
-            indexSljedecegPrijelaza={this.state.indexSljedecegPrijelaza}
-          />
-
+          <div
+            style={{
+              width: "90%",
+              minWidth: "800px",
+            }}
+          >
+            <ListaPrijelaza
+              prijelazi={this.state.prijelazi}
+              stanja={this.state.stanja}
+              simboli={this.state.simboli}
+              postaviPrijelaze={this.postaviPrijelaze}
+              indexSljedecegPrijelaza={this.state.indexSljedecegPrijelaza}
+            />
+          </div>
           <SadrzajTrake
             sadrzajTrake={this.state.sadrzajTrake}
             setSadrzajTrake={this.setSadrzajTrake}
-            tapeSimboli={this.state.tapeSimboli}
             availableSimboli={this.state.simboli}
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
           />
           <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
+          <div
+            style={{
+              width: "90%",
+              minWidth: "800px",
+            }}
+          >
+            <Traka
+              sadrzajTrake={this.state.sadrzajTrake}
+              trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
+            />
+          </div>
+
+          {this.state.trenutnoStanje === this.state.finalnoStanje ? (
+            <h2
+              style={{
+                color: "red",
+              }}
+            >
+              Ulaz nije prihvaćen
+              {this.state.status}
+            </h2>
+          ) : (
+            <h2
+              style={{
+                color: "green",
+              }}
+            >
+              Ulaz je prihvaćen
+              {this.state.status}
+            </h2>
+          )}
         </div>
       </div>
     );
