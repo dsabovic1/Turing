@@ -1,0 +1,2 @@
+# Turing
+Vizualizacija Turingove mašine
