@@ -12,11 +12,10 @@ class List extends Component {
         style={{
           margin: "15px",
           padding: "10px",
-          backgroundColor: "rgba(0,0,0,0.5)",
+          backgroundColor: "rgba(0,0,0,0.8)",
           overflowX: "auto",
           maxWidth: "100%",
-          border: "2px solid rgb(0, 15, 41)",
-          boxShadow: "2px 2px 10px black",
+          boxShadow: "2px 2px 7px black",
         }}
       >
         {this.props.title !== undefined && (

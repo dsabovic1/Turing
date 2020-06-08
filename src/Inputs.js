@@ -3,6 +3,7 @@ import AddIcon from "react-icons/lib/md/add";
 import RemoveIcon from "react-icons/lib/md/clear";
 import LeftIcon from "react-icons/lib/md/arrow-back";
 import RightIcon from "react-icons/lib/md/arrow-forward";
+
 function Button(props) {
   let width = props.fullWidth ? "100%" : "auto";
   let padding = "2px";
@@ -40,8 +41,6 @@ function RemoveButton(props) {
   return <Button {...props} text={<RemoveIcon />} />;
 }
 
-/* All values given by props must be primitive
-  because equality is checked by === */
 class ToggleButton extends Component {
   constructor(props) {
     super(props);
