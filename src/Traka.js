@@ -57,7 +57,6 @@ class Traka extends Component {
 function TapeLetter(props) {
   return (
     <TapeBlock size={props.size} active={props.active}>
-      />
       <ToggleButton
         value={props.simbol}
         values={props.simboli}
@@ -73,7 +72,7 @@ function TapeBlock(props) {
   let backgroundColor = "#EEE";
   let border = "1px solid black";
 
-  if (props.active) backgroundColor = "#8cb7ff";
+  if (props.active) backgroundColor = "#fffa69";
   if (props.utility) backgroundColor = "rgba(0,0,0,0)";
   if (props.utility) border = "0";
   return (
@@ -85,7 +84,7 @@ function TapeBlock(props) {
         fontSize: "20px",
         borderRadius: "5px",
         display: "flex",
-        justifyContent: "center",
+
         padding: "5px",
         border: border,
         boxSizing: "border-box",

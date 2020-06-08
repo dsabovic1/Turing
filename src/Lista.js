@@ -13,7 +13,7 @@ class List extends Component {
           margin: "15px",
           padding: "10px",
           backgroundColor: "rgba(0,0,0,0.8)",
-          overflowX: "auto",
+          zaustavi: "auto",
           maxWidth: "100%",
           boxShadow: "2px 2px 7px black",
         }}
@@ -101,7 +101,7 @@ class ListRow extends Component {
     let backgroundColor = "#DDD";
     let weight = "normal";
     let color = "black";
-    if (this.props.primary) backgroundColor = "#8cb7ff";
+    if (this.props.primary) backgroundColor = "#fffa69";
     if (this.props.header) backgroundColor = "#333";
     if (this.props.utility) backgroundColor = "rgba(0,0,0,0)";
     if (this.props.header) weight = "bold";

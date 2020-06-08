@@ -3,6 +3,7 @@ import SadrzajTrake from "./SadrzajTrake";
 import ListaSimbola from "./ListaSimbola";
 import ListaStanja from "./ListaStanja";
 import ListaPrijelaza from "./ListaPrijelaza";
+import Kontrole from "./Kontrole";
 
 class TM extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class TM extends Component {
     this.postaviSimbole = this.postaviSimbole.bind(this);
     this.postaviStanja = this.postaviStanja.bind(this);
     this.postaviPrijelaze = this.postaviPrijelaze.bind(this);
+    this.izvrsiPrijelaz = this.izvrsiPrijelaz.bind(this);
 
     this.state = {
       stanja: ["q0"],
@@ -28,7 +30,8 @@ class TM extends Component {
       sadrzajTrake: ["A"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
-      trenutnaPozicijaGlave: 1,
+      indexSljedecegPrijelaza: 0,
+      trenutnaPozicijaGlave: 0,
     };
   }
 
@@ -88,6 +91,7 @@ class TM extends Component {
             stanja={this.state.stanja}
             simboli={this.state.simboli}
             postaviPrijelaze={this.postaviPrijelaze}
+            indexSljedecegPrijelaza={this.state.indexSljedecegPrijelaza}
           />
 
           <SadrzajTrake
@@ -97,6 +101,7 @@ class TM extends Component {
             availableSimboli={this.state.simboli}
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
           />
+          <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
         </div>
       </div>
     );
