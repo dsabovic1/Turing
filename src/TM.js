@@ -160,13 +160,7 @@ class TM extends Component {
               Početno stanje
             </h3>
             <ListRow>
-              <EditableField
-                value={transition.trenutnoStanje}
-                values={this.props.states}
-                setValue={(value) => {
-                  this.izmjeniPrijelaz(index, "trenutnoStanje", value);
-                }}
-              />
+              <EditableField />
             </ListRow>
           </div>
           <List
