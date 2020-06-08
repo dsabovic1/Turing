@@ -19,6 +19,7 @@ class TM extends Component {
     this.izvrsiPrijelaz = this.izvrsiPrijelaz.bind(this);
     this.izmjeniPocetnoStanje = this.izmjeniPocetnoStanje.bind(this);
     this.izmjeniSimbolPrazneCelije = this.izmjeniSimbolPrazneCelije.bind(this);
+    this.postaviFinalnaStanja = this.postaviFinalnaStanja.bind(this);
 
     this.state = {
       stanja: ["q0", "q1"],
@@ -53,6 +54,7 @@ class TM extends Component {
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
+      indexTrenutnogFinalnogStanja: 0,
       trenutnaPozicijaGlave: 0,
       status: "",
       pocetnoStanje: ["q0"],
@@ -149,10 +151,7 @@ class TM extends Component {
           <ListaStanja
             stanja={this.state.finalnaStanja}
             postaviStanja={this.postaviFinalnaStanja}
-            indexTrenutnogStanja={
-              this.state.prijelazi[this.state.indexSljedecegPrijelaza]
-                .trenutnoStanje
-            }
+            indexTrenutnogStanja={this.state.indexTrenutnogFinalnogStanja}
             title="Finalna stanja"
             type="finalna"
           />
