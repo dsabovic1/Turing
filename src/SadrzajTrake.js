@@ -18,9 +18,9 @@ class SadrzajTrake extends Component {
   }
 
   removeSadrzajTrake() {
-    let newLetters = this.props.letters.slice();
-    newLetters.pop();
-    this.props.setLetters(newLetters);
+    let newSimboli = this.props.simboli.slice();
+    newSimboli.pop();
+    this.props.postaviSimbole(newSimboli);
   }
 
   render() {
@@ -63,13 +63,9 @@ class SadrzajTrake extends Component {
           <div
             style={{ position: "relative", height: "140px", marginTop: "20px" }}
           >
-            <GlavaZaCitanje />
             <Traka
               sadrzajTrake={this.props.sadrzajTrake}
-              availableLetters={this.props.letters}
-              currentTapePosition={this.props.currentTapePosition}
-              setCurrentTapePosition={this.setCurrentTapePosition}
-              setTapeLetters={this.setTapeLettersAndShiftTapePosition}
+              trenutnaPozicijaGlave={this.props.trenutnaPozicijaGlave}
             />
           </div>
         </div>

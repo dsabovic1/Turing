@@ -1,39 +1,34 @@
 import React, { Component } from "react";
 import { ToggleButton, AddButton } from "./Inputs";
 
+import GlavaZaCitanje from "./GlavaZaCitanje";
+
 class Traka extends Component {
   constructor(props) {
     super(props);
-    this.addLetter = this.addLetter.bind(this);
-    this.setLetter = this.setLetter.bind(this);
-
     this.state = {
-      blockSize: 40,
+      velicinaBloka: 40,
     };
   }
 
   addLetter(toBeginning) {
-    let newTapeLetters = this.props.tapeLetters.slice();
-    if (toBeginning) newTapeLetters.unshift(this.props.availableLetters[0]);
-    else newTapeLetters.push(this.props.availableLetters[0]);
-    this.props.setTapeLetters(newTapeLetters, toBeginning ? 1 : 0);
+    let newTapeSimboli = this.props.tapeSimboli.slice();
+    if (toBeginning) newTapeSimboli.unshift(this.props.availableSimboli[0]);
+    else newTapeSimboli.push(this.props.availableSimboli[0]);
+    this.props.setTapeSimboli(newTapeSimboli, toBeginning ? 1 : 0);
   }
-  setLetter(index, letter) {
-    let newTapeLetters = this.props.tapeLetters.slice();
-    newTapeLetters[index] = letter;
-    this.props.setTapeLetters(newTapeLetters);
+  postaviSimbol(index, letter) {
+    let newTapeSimboli = this.props.tapeSimboli.slice();
+    newTapeSimboli[index] = letter;
+    this.props.setTapeSimboli(newTapeSimboli);
   }
 
   render() {
-    let leftShiftAmount =
-      this.state.blockSize / 2 +
-      (this.props.currentTapePosition + 1) * this.state.blockSize;
     return (
       <div
         style={{
           position: "absolute",
           top: "80px",
-          left: "calc(50% - " + leftShiftAmount + "px)",
         }}
       >
         <div
@@ -41,20 +36,18 @@ class Traka extends Component {
             display: "flex",
           }}
         >
-          <AddBlock onClick={(e) => this.addLetter(true)} />
-          {this.props.sadrzajTrake.map((letter, index) => {
+          {this.props.sadrzajTrake.map((simbol, index) => {
             return (
               <TapeLetter
-                active={this.props.currentTapePosition === index}
-                size={this.state.blockSize}
+                active={this.props.trenutnaPozicijaGlave === index}
+                size={this.state.velicinaBloka}
                 index={index}
-                letter={letter}
-                letters={this.props.availableLetters}
-                setLetter={this.setLetter}
+                simbol={simbol}
+                simboli={this.props.availableSimboli}
+                postaviSimbol={this.postaviSimbol}
               />
             );
           })}
-          <AddBlock onClick={(e) => this.addLetter(false)} />
         </div>
       </div>
     );
@@ -64,10 +57,11 @@ class Traka extends Component {
 function TapeLetter(props) {
   return (
     <TapeBlock size={props.size} active={props.active}>
+      />
       <ToggleButton
-        value={props.letter}
-        values={props.letters}
-        setValue={(value) => props.setLetter(props.index, value)}
+        value={props.simbol}
+        values={props.simboli}
+        setValue={(value) => props.postaviSimbol(props.index, value)}
       >
         {props.letter}
       </ToggleButton>
@@ -75,23 +69,13 @@ function TapeLetter(props) {
   );
 }
 
-function AddBlock(props) {
-  return (
-    <TapeBlock utility size={props.size}>
-      <AddButton onClick={props.onClick} />
-    </TapeBlock>
-  );
-}
-
 function TapeBlock(props) {
   let backgroundColor = "#EEE";
   let border = "1px solid black";
-  let boxShadow = "2px 2px 5px black";
 
   if (props.active) backgroundColor = "#8cb7ff";
   if (props.utility) backgroundColor = "rgba(0,0,0,0)";
   if (props.utility) border = "0";
-  if (props.utility) boxShadow = "0";
   return (
     <div
       style={{
@@ -104,10 +88,10 @@ function TapeBlock(props) {
         justifyContent: "center",
         padding: "5px",
         border: border,
-        boxShadow: boxShadow,
         boxSizing: "border-box",
       }}
     >
+      <GlavaZaCitanje />
       {props.children}
     </div>
   );
