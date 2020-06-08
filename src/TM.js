@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import LetterList from "./LetterList";
+import SadrzajTrake from "./SadrzajTrake";
+import Traka from "./Traka";
+import GlavaZaCitanje from "./GlavaZaCitanje";
 
 class TM extends Component {
   constructor(props) {
     super(props);
 
     this.setLetters = this.setLetters.bind(this);
+    this.setSadrzajTrake = this.setSadrzajTrake.bind(this);
 
     this.state = {
       states: ["STATE 0"], //always length >= 1
@@ -22,6 +26,7 @@ class TM extends Component {
       tapeLetters: ["A"],
       currentStateIndex: 0,
       currentTapePosition: 0,
+      sadrzajTrake: ["A"],
     };
   }
 
@@ -47,6 +52,12 @@ class TM extends Component {
     });
   }
 
+  setSadrzajTrake(rijec) {
+    this.setState({
+      sadrzajTrake: rijec,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -63,6 +74,16 @@ class TM extends Component {
             currentLetterIndex={this.state.letters.indexOf(
               this.state.tapeLetters[this.state.currentTapePosition]
             )}
+          />
+
+          <SadrzajTrake
+            sadrzajTrake={this.state.sadrzajTrake}
+            setSadrzajTrake={this.setSadrzajTrake}
+            tapeLetters={this.state.tapeLetters}
+            availableLetters={this.state.letters}
+            currentTapePosition={this.state.currentTapePosition}
+            setCurrentTapePosition={this.setCurrentTapePosition}
+            setTapeLetters={this.setTapeLettersAndShiftTapePosition}
           />
         </div>
       </div>
