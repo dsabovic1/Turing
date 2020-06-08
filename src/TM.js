@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SadrzajTrake from "./SadrzajTrake";
 import ListaSimbola from "./ListaSimbola";
 import ListaStanja from "./ListaStanja";
 import ListaPrijelaza from "./ListaPrijelaza";
@@ -6,6 +7,8 @@ import ListaPrijelaza from "./ListaPrijelaza";
 class TM extends Component {
   constructor(props) {
     super(props);
+
+    this.setSadrzajTrake = this.setSadrzajTrake.bind(this);
     this.postaviSimbole = this.postaviSimbole.bind(this);
     this.postaviStanja = this.postaviStanja.bind(this);
     this.postaviPrijelaze = this.postaviPrijelaze.bind(this);
@@ -22,6 +25,7 @@ class TM extends Component {
           smjerKretanja: "L",
         },
       ],
+      sadrzajTrake: ["A"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
     };
@@ -52,6 +56,12 @@ class TM extends Component {
     });
   }
 
+  setSadrzajTrake(rijec) {
+    this.setState({
+      sadrzajTrake: rijec,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -77,6 +87,16 @@ class TM extends Component {
             stanja={this.state.stanja}
             simboli={this.state.simboli}
             postaviPrijelaze={this.postaviPrijelaze}
+          />
+
+          <SadrzajTrake
+            sadrzajTrake={this.state.sadrzajTrake}
+            setSadrzajTrake={this.setSadrzajTrake}
+            tapeLetters={this.state.tapeLetters}
+            availableLetters={this.state.letters}
+            currentTapePosition={this.state.currentTapePosition}
+            setCurrentTapePosition={this.setCurrentTapePosition}
+            setTapeLetters={this.setTapeLettersAndShiftTapePosition}
           />
         </div>
       </div>
