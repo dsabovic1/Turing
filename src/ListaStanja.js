@@ -9,10 +9,12 @@ class ListaStanja extends Component {
     this.ukloniStanje = this.ukloniStanje.bind(this);
     this.izmjeniStanje = this.izmjeniStanje.bind(this);
   }
-  dodajNovoStanje() {
+  dodajNovoStanje(type) {
     let novaStanja = this.props.stanja.slice();
     novaStanja.push("q" + this.props.stanja.length);
-    this.props.postaviStanja(novaStanja);
+    type == "finalna"
+      ? this.props.postaviFinalnaStanja(novaStanja)
+      : this.props.postaviStanja(novaStanja);
   }
 
   ukloniStanje() {
@@ -30,7 +32,7 @@ class ListaStanja extends Component {
   render() {
     return (
       <List
-        title="Stanja"
+        title={this.props.title}
         addNew={this.dodajNovoStanje}
         removeLast={
           this.props.stanja.length > 1 ? this.ukloniStanje : undefined

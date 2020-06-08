@@ -5,6 +5,8 @@ import ListaStanja from "./ListaStanja";
 import ListaPrijelaza from "./ListaPrijelaza";
 import Kontrole from "./Kontrole";
 import Traka from "./Traka";
+import { ListColumn, ListRow, default as List } from "./Lista";
+import { EditableField } from "./Inputs";
 
 class TM extends Component {
   constructor(props) {
@@ -18,7 +20,9 @@ class TM extends Component {
 
     this.state = {
       stanja: ["q0", "q1"],
-      simboli: ["0", "1", "b"],
+      simboli: ["0", "1"],
+      simbolPrazneCelije: "_",
+      finalnaStanja: ["q1"],
       prijelazi: [
         {
           trenutnoStanje: "q0",
@@ -49,7 +53,7 @@ class TM extends Component {
       indexSljedecegPrijelaza: 0,
       trenutnaPozicijaGlave: 0,
       status: "",
-      finalnoStanje: 1,
+      pocetnoStanje: ["q0"],
     };
   }
 
@@ -60,6 +64,12 @@ class TM extends Component {
   postaviStanja(stanja) {
     this.setState({
       stanja: stanja,
+    });
+  }
+
+  postaviFinalnaStanja(stanja) {
+    this.setState({
+      finalnaStanja: stanja,
     });
   }
 
@@ -124,6 +134,53 @@ class TM extends Component {
             stanja={this.state.stanja}
             postaviStanja={this.postaviStanja}
             indexTrenutnogStanja={this.state.indexTrenutnogStanja}
+            title="Stanja"
+          />
+          <ListaStanja
+            stanja={this.state.finalnaStanja}
+            postaviStanja={this.postaviFinalnaStanja}
+            indexTrenutnogStanja={
+              this.state.prijelazi[this.state.indexSljedecegPrijelaza]
+                .trenutnoStanje
+            }
+            title="Finalna stanja"
+            type="finalna"
+          />
+          <div
+            style={{
+              margin: "15px",
+              padding: "10px",
+              backgroundColor: "rgba(0,0,0,0.8)",
+              zaustavi: "auto",
+              maxWidth: "100%",
+              boxShadow: "2px 2px 7px black",
+            }}
+          >
+            <h3 style={{ color: "white", paddingLeft: "5px" }}>
+              Početno stanje
+            </h3>
+            <ListRow>
+              <EditableField
+                value={transition.trenutnoStanje}
+                values={this.props.states}
+                setValue={(value) => {
+                  this.izmjeniPrijelaz(index, "trenutnoStanje", value);
+                }}
+              />
+            </ListRow>
+          </div>
+          <List
+            title="Simbol za praznu ćeliju"
+            items={this.state.pocetnoStanje.map(() => {
+              return (
+                <EditableField
+                  value={this.state.simbolPrazneCelije}
+                  setValue={(value) => {
+                    this.state.simbolPrazneCelije = value;
+                  }}
+                />
+              );
+            })}
           />
           <div
             style={{
