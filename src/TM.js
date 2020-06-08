@@ -50,12 +50,12 @@ class TM extends Component {
           smjerKretanja: "R",
         },
       ],
-      sadrzajTrake: ["0", "1", "0", "1", "0", "1", "b"],
+      sadrzajTrake: ["_", "0", "1", "0", "1", "0", "1", "_"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
       indexTrenutnogFinalnogStanja: 0,
-      trenutnaPozicijaGlave: 0,
+      trenutnaPozicijaGlave: 1,
       status: "",
       pocetnoStanje: ["q0"],
     };
@@ -106,7 +106,20 @@ class TM extends Component {
       });
     }
     let noviNizSimbola = this.state.sadrzajTrake.slice();
-    noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
+    if (
+      noviNizSimbola[this.state.trenutnaPozicijaGlave] ===
+      this.state.simbolPrazneCelije
+    ) {
+      if (prijelaz.smjerKretanja === "R") {
+        noviNizSimbola.push(this.state.simbolPrazneCelije);
+        noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
+      } else {
+        noviNizSimbola.unshift(this.state.simbolPrazneCelije);
+        noviNizSimbola[this.state.trenutnaPozicijaGlave + 1] =
+          prijelaz.noviSimbol;
+      }
+    } else
+      noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
     let novaPozicijaGlave =
       this.state.trenutnaPozicijaGlave +
       (prijelaz.smjerKretanja === "L" ? -1 : 1);
@@ -218,17 +231,20 @@ class TM extends Component {
             setSadrzajTrake={this.setSadrzajTrake}
             availableSimboli={this.state.simboli}
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
+            simbolPrazneCelije={this.state.simbolPrazneCelije}
           />
           <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
           <div
             style={{
-              width: "90%",
+              width: "50%",
               minWidth: "800px",
             }}
           >
             <Traka
               sadrzajTrake={this.state.sadrzajTrake}
               trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
+              sadrzajTrake={this.state.sadrzajTrake}
+              setSadrzajTrake={this.setSadrzajTrake}
             />
           </div>
 

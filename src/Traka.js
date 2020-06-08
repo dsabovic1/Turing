@@ -14,7 +14,7 @@ class Traka extends Component {
   postaviSimbol(index, letter) {
     let noviSimboliTrake = this.props.tapeSimboli.slice();
     noviSimboliTrake[index] = letter;
-    this.props.setTapeSimboli(noviSimboliTrake);
+    this.props.dodajSadrzajTrake(noviSimboliTrake);
   }
 
   render() {
@@ -27,6 +27,7 @@ class Traka extends Component {
         <div
           style={{
             display: "flex",
+            marginLeft: "90px",
           }}
         >
           {this.props.sadrzajTrake.map((simbol, index) => {

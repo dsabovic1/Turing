@@ -12,6 +12,8 @@ class SadrzajTrake extends Component {
     var str = this.refs.tekst.value;
     var ar = [];
     ar = str.split("");
+    ar.unshift(this.props.simbolPrazneCelije);
+    ar.push(this.props.simbolPrazneCelije);
     this.props.setSadrzajTrake(ar);
     console.log(ar);
   }
@@ -34,7 +36,10 @@ class SadrzajTrake extends Component {
               Sadržaj trake
             </h3>
             <input
-              defaultValue={this.props.sadrzajTrake.join("")}
+              defaultValue={this.props.sadrzajTrake
+                .join("")
+                .replace(this.props.simbolPrazneCelije, "")
+                .replace(this.props.simbolPrazneCelije, "")}
               type="text"
               name="sadrzaj"
               ref="tekst"
