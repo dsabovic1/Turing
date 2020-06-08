@@ -46,6 +46,7 @@ class ListaSimbola extends Component {
             />
           );
         })}
+        primaryHighlightIndex={this.props.indexTrenutnogSimbola}
       ></List>
     );
   }

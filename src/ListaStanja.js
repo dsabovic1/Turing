@@ -45,6 +45,7 @@ class ListaStanja extends Component {
             />
           );
         })}
+        primaryHighlightIndex={this.props.indexTrenutnogStanja}
       />
     );
   }
