@@ -9,7 +9,7 @@ class MachineReadingHead extends Component {
           width: "200px",
           height: "80px",
           position: "absolute",
-          left: "calc(50% - 30px)",
+          left: "calc(50% + 30px)",
         }}
       >
         <svg

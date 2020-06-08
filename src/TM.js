@@ -1,54 +1,58 @@
 import React, { Component } from "react";
-import LetterList from "./LetterList";
 import SadrzajTrake from "./SadrzajTrake";
-import Traka from "./Traka";
-import GlavaZaCitanje from "./GlavaZaCitanje";
+import ListaSimbola from "./ListaSimbola";
+import ListaStanja from "./ListaStanja";
+import ListaPrijelaza from "./ListaPrijelaza";
 
 class TM extends Component {
   constructor(props) {
     super(props);
 
-    this.setLetters = this.setLetters.bind(this);
     this.setSadrzajTrake = this.setSadrzajTrake.bind(this);
+    this.postaviSimbole = this.postaviSimbole.bind(this);
+    this.postaviStanja = this.postaviStanja.bind(this);
+    this.postaviPrijelaze = this.postaviPrijelaze.bind(this);
 
     this.state = {
-      states: ["STATE 0"], //always length >= 1
-      transitions: [
+      stanja: ["q0"],
+      simboli: [0, 1],
+      prijelazi: [
         {
-          oldState: "STATE 0",
-          readLetter: "A",
-          newState: "STATE 0",
-          newLetter: "A",
-          moveDirection: "L",
+          trenutnoStanje: "q0",
+          simbolNaTraci: "0",
+          novoStanje: "q0",
+          noviSimbol: "0",
+          smjerKretanja: "L",
         },
       ],
-      letters: ["A"], //always length >= 1
-      tapeLetters: ["A"],
-      currentStateIndex: 0,
-      currentTapePosition: 0,
       sadrzajTrake: ["A"],
+      indexTrenutnogStanja: 0,
+      indexTrenutnogSimbola: 0,
     };
   }
 
-  setLetters(letters) {
-    let fixedTransitions = this.state.transitions.slice();
-    fixedTransitions = fixedTransitions.map((transition) => {
-      let newTransition = Object.assign({}, transition);
-      if (letters.indexOf(newTransition.readLetter) === -1)
-        newTransition.readLetter = letters[0];
-      if (letters.indexOf(newTransition.newLetter) === -1)
-        newTransition.newLetter = letters[0];
-      return newTransition;
+  postaviPrijelaze(prijelazi) {
+    this.setState({ prijelazi: prijelazi });
+  }
+
+  postaviStanja(stanja) {
+    this.setState({
+      stanja: stanja,
     });
-    let fixedTapeLetters = this.state.tapeLetters.slice();
-    fixedTapeLetters = fixedTapeLetters.map((letter) => {
-      if (letters.indexOf(letter) === -1) return letters[0];
-      return letter;
+  }
+
+  postaviSimbole(simboli) {
+    this.setState({
+      simboli: simboli,
+    });
+  }
+
+  izvrsiPrijelaz() {
+    let prijelaz = this.state.prijelazi.find((prijelaz) => {
+      return prijelaz;
     });
     this.setState({
-      letters: letters,
-      transitions: fixedTransitions,
-      tapeLetters: fixedTapeLetters,
+      indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
     });
   }
 
@@ -68,12 +72,21 @@ class TM extends Component {
             flexWrap: "wrap",
           }}
         >
-          <LetterList
-            letters={this.state.letters}
-            setLetters={this.setLetters}
-            currentLetterIndex={this.state.letters.indexOf(
-              this.state.tapeLetters[this.state.currentTapePosition]
-            )}
+          <ListaSimbola
+            simboli={this.state.simboli}
+            postaviSimbole={this.postaviSimbole}
+            indexTrenutnogSimbola={this.state.indexTrenutnogSimbola}
+          />
+          <ListaStanja
+            stanja={this.state.stanja}
+            postaviStanja={this.postaviStanja}
+            indexTrenutnogStanja={this.state.indexTrenutnogStanja}
+          />
+          <ListaPrijelaza
+            prijelazi={this.state.prijelazi}
+            stanja={this.state.stanja}
+            simboli={this.state.simboli}
+            postaviPrijelaze={this.postaviPrijelaze}
           />
 
           <SadrzajTrake
