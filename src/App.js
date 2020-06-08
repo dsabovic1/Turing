@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import TM from "./TM";
 
 function App() {
   return <TM></TM>;

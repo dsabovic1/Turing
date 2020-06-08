@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListColumn, ListRow, default as List } from "Lists/List";
+import { ListColumn, ListRow, default as List } from "./List";
 
 class LetterList extends Component {
   constructor(props) {
