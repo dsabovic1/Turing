@@ -28,7 +28,7 @@ class Traka extends Component {
       <div
         style={{
           position: "absolute",
-          top: "80px",
+          top: "20px",
         }}
       >
         <div
@@ -38,7 +38,7 @@ class Traka extends Component {
         >
           {this.props.sadrzajTrake.map((simbol, index) => {
             return (
-              <TapeLetter
+              <SadrzajTrake
                 active={this.props.trenutnaPozicijaGlave === index}
                 size={this.state.velicinaBloka}
                 index={index}
@@ -54,10 +54,9 @@ class Traka extends Component {
   }
 }
 
-function TapeLetter(props) {
+function SadrzajTrake(props) {
   return (
-    <TapeBlock size={props.size} active={props.active}>
-      />
+    <SimbolTrake size={props.size} active={props.active}>
       <ToggleButton
         value={props.simbol}
         values={props.simboli}
@@ -65,11 +64,11 @@ function TapeLetter(props) {
       >
         {props.letter}
       </ToggleButton>
-    </TapeBlock>
+    </SimbolTrake>
   );
 }
 
-function TapeBlock(props) {
+function SimbolTrake(props) {
   let backgroundColor = "#EEE";
   let border = "1px solid black";
 
@@ -77,22 +76,23 @@ function TapeBlock(props) {
   if (props.utility) backgroundColor = "rgba(0,0,0,0)";
   if (props.utility) border = "0";
   return (
-    <div
-      style={{
-        width: props.size + "px",
-        height: props.size + "px",
-        backgroundColor: backgroundColor,
-        fontSize: "20px",
-        borderRadius: "5px",
-        display: "flex",
-        justifyContent: "center",
-        padding: "5px",
-        border: border,
-        boxSizing: "border-box",
-      }}
-    >
-      <GlavaZaCitanje />
-      {props.children}
+    <div>
+      <div
+        style={{
+          width: props.size + "px",
+          height: props.size + "px",
+          backgroundColor: backgroundColor,
+          fontSize: "20px",
+          borderRadius: "5px",
+          padding: "5px",
+          border: border,
+          boxSizing: "border-box",
+        }}
+      >
+        {props.children}
+
+        <GlavaZaCitanje />
+      </div>
     </div>
   );
 }

@@ -56,7 +56,6 @@ class SadrzajTrake extends Component {
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
             flexWrap: "wrap",
           }}
         >
