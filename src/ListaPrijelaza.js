@@ -63,7 +63,7 @@ class ListaPrijelaza extends Component {
             />,
             <EditableField
               value={transition.simbolNaTraci}
-              values={this.props.letters}
+              values={this.props.simboli}
               setValue={(value) => {
                 this.izmjeniPrijelaz(index, "simbolNaTraci", value);
               }}
@@ -77,7 +77,7 @@ class ListaPrijelaza extends Component {
             />,
             <EditableField
               value={transition.noviSimbol}
-              values={this.props.letters}
+              values={this.props.simboli}
               setValue={(value) => {
                 this.izmjeniPrijelaz(index, "noviSimbol", value);
               }}

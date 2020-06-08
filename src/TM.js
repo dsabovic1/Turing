@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SadrzajTrake from "./SadrzajTrake";
 import ListaSimbola from "./ListaSimbola";
 import ListaStanja from "./ListaStanja";
 import ListaPrijelaza from "./ListaPrijelaza";
@@ -7,6 +8,8 @@ import Kontrole from "./Kontrole";
 class TM extends Component {
   constructor(props) {
     super(props);
+
+    this.setSadrzajTrake = this.setSadrzajTrake.bind(this);
     this.postaviSimbole = this.postaviSimbole.bind(this);
     this.postaviStanja = this.postaviStanja.bind(this);
     this.postaviPrijelaze = this.postaviPrijelaze.bind(this);
@@ -24,9 +27,11 @@ class TM extends Component {
           smjerKretanja: "L",
         },
       ],
+      sadrzajTrake: ["A"],
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
+      trenutnaPozicijaGlave: 0,
     };
   }
 
@@ -52,6 +57,12 @@ class TM extends Component {
     });
     this.setState({
       indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
+    });
+  }
+
+  setSadrzajTrake(rijec) {
+    this.setState({
+      sadrzajTrake: rijec,
     });
   }
 
@@ -82,8 +93,16 @@ class TM extends Component {
             postaviPrijelaze={this.postaviPrijelaze}
             indexSljedecegPrijelaza={this.state.indexSljedecegPrijelaza}
           />
+
+          <SadrzajTrake
+            sadrzajTrake={this.state.sadrzajTrake}
+            setSadrzajTrake={this.setSadrzajTrake}
+            tapeSimboli={this.state.tapeSimboli}
+            availableSimboli={this.state.simboli}
+            trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
+          />
+          <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
         </div>
-        <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
       </div>
     );
   }
