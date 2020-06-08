@@ -17,6 +17,8 @@ class TM extends Component {
     this.postaviStanja = this.postaviStanja.bind(this);
     this.postaviPrijelaze = this.postaviPrijelaze.bind(this);
     this.izvrsiPrijelaz = this.izvrsiPrijelaz.bind(this);
+    this.izmjeniPocetnoStanje = this.izmjeniPocetnoStanje.bind(this);
+    this.izmjeniSimbolPrazneCelije = this.izmjeniSimbolPrazneCelije.bind(this);
     this.postaviFinalnaStanja = this.postaviFinalnaStanja.bind(this);
 
     this.state = {
@@ -57,6 +59,14 @@ class TM extends Component {
       status: "",
       pocetnoStanje: ["q0"],
     };
+  }
+
+  izmjeniPocetnoStanje(value) {
+    this.setState({ pocetnoStanje: value });
+  }
+
+  izmjeniSimbolPrazneCelije(value) {
+    this.setState({ simbolPrazneCelije: value });
   }
 
   postaviPrijelaze(prijelazi) {
@@ -159,22 +169,36 @@ class TM extends Component {
               Početno stanje
             </h3>
             <ListRow>
-              <EditableField />
+              <EditableField
+                value={this.state.pocetnoStanje}
+                setValue={(value) => {
+                  this.izmjeniPocetnoStanje(value);
+                }}
+              />
             </ListRow>
           </div>
-          <List
-            title="Simbol za praznu ćeliju"
-            items={this.state.pocetnoStanje.map(() => {
-              return (
-                <EditableField
-                  value={this.state.simbolPrazneCelije}
-                  setValue={(value) => {
-                    this.state.simbolPrazneCelije = value;
-                  }}
-                />
-              );
-            })}
-          />
+          <div
+            style={{
+              margin: "15px",
+              padding: "10px",
+              backgroundColor: "rgba(0,0,0,0.8)",
+              zaustavi: "auto",
+              maxWidth: "100%",
+              boxShadow: "2px 2px 7px black",
+            }}
+          >
+            <h3 style={{ color: "white", paddingLeft: "5px" }}>
+              Simbol prazne ćelije
+            </h3>
+            <ListRow>
+              <EditableField
+                value={this.state.simbolPrazneCelije}
+                setValue={(value) => {
+                  this.izmjeniSimbolPrazneCelije(value);
+                }}
+              />
+            </ListRow>
+          </div>
           <div
             style={{
               width: "90%",
