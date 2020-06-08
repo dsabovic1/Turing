@@ -12,7 +12,7 @@ class ListaSimbola extends Component {
 
   dodajSimbol() {
     let noviSimboli = this.props.simboli.slice();
-    noviSimboli.push(this.props.simboli.length);
+    noviSimboli.push(this.props.simboli.length.toString());
     this.props.postaviSimbole(noviSimboli);
   }
 
@@ -24,7 +24,7 @@ class ListaSimbola extends Component {
 
   izmjeniSimbol(index, value) {
     let noviSimboli = this.props.simboli.slice();
-    noviSimboli[index] = value;
+    noviSimboli[index] = value.toString();
     this.props.postaviSimbole(noviSimboli);
   }
 
@@ -46,6 +46,7 @@ class ListaSimbola extends Component {
             />
           );
         })}
+        primaryHighlightIndex={this.props.indexTrenutnogSimbola}
       ></List>
     );
   }

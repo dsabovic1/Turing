@@ -11,24 +11,17 @@ class Traka extends Component {
     };
   }
 
-  addLetter(toBeginning) {
-    let newTapeSimboli = this.props.tapeSimboli.slice();
-    if (toBeginning) newTapeSimboli.unshift(this.props.availableSimboli[0]);
-    else newTapeSimboli.push(this.props.availableSimboli[0]);
-    this.props.setTapeSimboli(newTapeSimboli, toBeginning ? 1 : 0);
-  }
   postaviSimbol(index, letter) {
-    let newTapeSimboli = this.props.tapeSimboli.slice();
-    newTapeSimboli[index] = letter;
-    this.props.setTapeSimboli(newTapeSimboli);
+    let noviSimboliTrake = this.props.tapeSimboli.slice();
+    noviSimboliTrake[index] = letter;
+    this.props.setTapeSimboli(noviSimboliTrake);
   }
 
   render() {
     return (
       <div
         style={{
-          position: "absolute",
-          top: "20px",
+          top: "50px",
         }}
       >
         <div
@@ -72,7 +65,7 @@ function SimbolTrake(props) {
   let backgroundColor = "#EEE";
   let border = "1px solid black";
 
-  if (props.active) backgroundColor = "#8cb7ff";
+  if (props.active) backgroundColor = "#fffa69";
   if (props.utility) backgroundColor = "rgba(0,0,0,0)";
   if (props.utility) border = "0";
   return (
@@ -90,8 +83,7 @@ function SimbolTrake(props) {
         }}
       >
         {props.children}
-
-        <GlavaZaCitanje />
+        {props.active ? <GlavaZaCitanje /> : ""}
       </div>
     </div>
   );

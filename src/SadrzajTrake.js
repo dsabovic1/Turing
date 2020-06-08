@@ -5,22 +5,15 @@ import GlavaZaCitanje from "./GlavaZaCitanje";
 class SadrzajTrake extends Component {
   constructor(props) {
     super(props);
-    this.addSadrzajTrake = this.addSadrzajTrake.bind(this);
-    this.removeSadrzajTrake = this.removeSadrzajTrake.bind(this);
+    this.dodajSadrzajTrake = this.dodajSadrzajTrake.bind(this);
   }
 
-  addSadrzajTrake(sadrzaj) {
+  dodajSadrzajTrake(sadrzaj) {
     var str = this.refs.tekst.value;
     var ar = [];
     ar = str.split("");
     this.props.setSadrzajTrake(ar);
     console.log(ar);
-  }
-
-  removeSadrzajTrake() {
-    let newSimboli = this.props.simboli.slice();
-    newSimboli.pop();
-    this.props.postaviSimbole(newSimboli);
   }
 
   render() {
@@ -30,11 +23,10 @@ class SadrzajTrake extends Component {
           style={{
             margin: "15px",
             padding: "10px",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            overflowX: "auto",
+            backgroundColor: "rgba(0,0,0,0.8)",
+            zaustavi: "auto",
             maxWidth: "100%",
-            border: "2px solid rgb(0, 15, 41)",
-            boxShadow: "2px 2px 10px black",
+            boxShadow: "2px 2px 7px black",
           }}
         >
           <label>
@@ -42,31 +34,15 @@ class SadrzajTrake extends Component {
               Sadržaj trake
             </h3>
             <input
-              defaultValue={this.props.sadrzajTrake}
+              defaultValue={this.props.sadrzajTrake.join("")}
               type="text"
               name="sadrzaj"
               ref="tekst"
             />
           </label>
-          <button value="Send" onClick={this.addSadrzajTrake}>
+          <button value="Send" onClick={this.dodajSadrzajTrake}>
             +
           </button>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-          }}
-        >
-          <div
-            style={{ position: "relative", height: "140px", marginTop: "20px" }}
-          >
-            <Traka
-              sadrzajTrake={this.props.sadrzajTrake}
-              trenutnaPozicijaGlave={this.props.trenutnaPozicijaGlave}
-            />
-          </div>
         </div>
       </div>
     );

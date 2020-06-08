@@ -93,6 +93,7 @@ class ListaPrijelaza extends Component {
           ];
         })}
         columnWidths={[200, 100, 200, 120, 120, 50]}
+        primaryHighlightIndex={this.props.indexSljedecegPrijelaza}
       />
     );
   }
