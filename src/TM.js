@@ -56,7 +56,7 @@ class TM extends Component {
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
-      indexTrenutnogFinalnogStanja: 0,
+      indexTrenutnogFinalnogStanja: -1,
       trenutnaPozicijaGlave: 1,
       status: "",
       pocetnoStanje: ["q0"],
@@ -106,11 +106,8 @@ class TM extends Component {
       );
     });
     if (prijelaz === undefined) {
-      console.log(
-        this.state.finalnaStanja.indexOf(this.state.indexTrenutnogStanja)
-      );
       this.setState({
-        status: "Ne postoji prijelaz za trenutno stanje i simbol",
+        status: "! Ne postoji prijelaz za trenutno stanje i simbol",
       });
     }
     let noviNizSimbola = this.state.sadrzajTrake.slice();
@@ -137,6 +134,9 @@ class TM extends Component {
     }
     this.setState({
       indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
+      indexTrenutnogFinalnogStanja: this.state.finalnaStanja.indexOf(
+        prijelaz.novoStanje
+      ),
       sadrzajTrake: noviNizSimbola,
       trenutnaPozicijaGlave: novaPozicijaGlave,
       indexTrenutnogSimbola: this.state.simboli.indexOf(
@@ -314,7 +314,9 @@ class TM extends Component {
               }}
             >
               Ulaz je prihvaćen
-              {this.state.status}
+              {this.state.status
+                ? this.state.status + ". TM se nalazi u finalnom stanju"
+                : ""}
             </h2>
           ) : (
             <h2
