@@ -72,6 +72,11 @@ class Kontrole extends Component {
             onClick={this.izvrsiPrijelaz}
             text="Izvrši jednu iteraciju"
           />
+          <Button
+            big
+            onClick={() => window.location.reload(false)}
+            text="Reinicijalizacija"
+          />
           <div
             style={{
               margin: "10px",
