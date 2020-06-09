@@ -8,6 +8,8 @@ import Traka from "./Traka";
 import { ListColumn, ListRow, default as List } from "./Lista";
 import { EditableField } from "./Inputs";
 
+import PopUp from "./PopUp";
+
 class TM extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class TM extends Component {
       stanja: ["q0", "q1"],
       simboli: ["0", "1"],
       simbolPrazneCelije: "_",
-      finalnaStanja: ["q1"],
+      finalnaStanja: ["q0"],
       prijelazi: [
         {
           trenutnoStanje: "q0",
@@ -59,6 +61,7 @@ class TM extends Component {
       status: "",
       pocetnoStanje: ["q0"],
       prihvacen: false,
+      ok: 1,
     };
   }
 
@@ -93,6 +96,7 @@ class TM extends Component {
   }
 
   izvrsiPrijelaz() {
+    this.validacija();
     let prijelaz = this.state.prijelazi.find((prijelaz) => {
       return (
         prijelaz.trenutnoStanje ===
@@ -107,6 +111,7 @@ class TM extends Component {
       });
     }
     let noviNizSimbola = this.state.sadrzajTrake.slice();
+    let novaPozicijaGlave;
     if (
       noviNizSimbola[this.state.trenutnaPozicijaGlave] ===
       this.state.simbolPrazneCelije
@@ -114,16 +119,19 @@ class TM extends Component {
       if (prijelaz.smjerKretanja === "R") {
         noviNizSimbola.push(this.state.simbolPrazneCelije);
         noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
+        novaPozicijaGlave = this.state.trenutnaPozicijaGlave + 1;
       } else {
         noviNizSimbola.unshift(this.state.simbolPrazneCelije);
         noviNizSimbola[this.state.trenutnaPozicijaGlave + 1] =
           prijelaz.noviSimbol;
+        novaPozicijaGlave = this.state.trenutnaPozicijaGlave;
       }
-    } else
+    } else {
       noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
-    let novaPozicijaGlave =
-      this.state.trenutnaPozicijaGlave +
-      (prijelaz.smjerKretanja === "L" ? -1 : 1);
+      novaPozicijaGlave =
+        this.state.trenutnaPozicijaGlave +
+        (prijelaz.smjerKretanja === "L" ? -1 : 1);
+    }
     this.setState({
       indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
       indexTrenutnogFinalnogStanja: this.state.finalnaStanja.indexOf(
@@ -141,6 +149,46 @@ class TM extends Component {
   setSadrzajTrake(rijec) {
     this.setState({
       sadrzajTrake: rijec,
+    });
+  }
+
+  validacija() {
+    let novaFinalnaStanja = this.state.finalnaStanja;
+    for (let i = 0; i < novaFinalnaStanja.length; i++) {
+      let element = novaFinalnaStanja[i];
+      if (this.state.stanja.indexOf(element) === -1) {
+        novaFinalnaStanja.splice(i, 1);
+        i = 0;
+        this.setState({
+          ok: "Finalna stanja nisu iz skupa stanja",
+        });
+      }
+    }
+
+    let noviSadrzajTrake = this.state.sadrzajTrake;
+    for (let i = 0; i < noviSadrzajTrake.length; i++) {
+      let element = noviSadrzajTrake[i];
+      if (
+        this.state.simboli.indexOf(element) === -1 &&
+        element != this.state.simbolPrazneCelije
+      ) {
+        noviSadrzajTrake.splice(i, 1);
+        i = 0;
+        this.setState({
+          ok: "Simboli na traci nisu iz skupa simbola alfabeta",
+        });
+      }
+    }
+
+    this.setState({
+      finalnaStanja: novaFinalnaStanja,
+      sadrzajTrake: noviSadrzajTrake,
+    });
+  }
+
+  zatvoriPopup() {
+    this.setState({
+      ok: 1,
     });
   }
 
@@ -238,6 +286,12 @@ class TM extends Component {
             simbolPrazneCelije={this.state.simbolPrazneCelije}
           />
           <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
+
+          {this.state.ok === 1 ? (
+            ""
+          ) : (
+            <PopUp validacija={this.validacija} ok={this.state.ok}></PopUp>
+          )}
           <div
             style={{
               width: "50%",
