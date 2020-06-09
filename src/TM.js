@@ -54,8 +54,13 @@ class TM extends Component {
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
+<<<<<<< HEAD
       trenutnaPozicijaGlave: 1,
       indexTrenutnogFinalnogStanja: -1,
+=======
+      indexTrenutnogFinalnogStanja: 0,
+      trenutnaPozicijaGlave: 1,
+>>>>>>> master
       status: "",
       pocetnoStanje: ["q0"],
       prihvacen: false,
