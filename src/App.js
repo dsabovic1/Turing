@@ -1,21 +1,14 @@
 import React from "react";
 import TM from "./TM";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h1
-        style={{
-          fontSize: "50px",
-          margin: "15px",
-          textAlign: "center",
-        }}
-      >
-        Vizualizacija Turingove mašine
-      </h1>
+      <h1 className="header">Vizualizacija Turingove mašine</h1>
       <p
         style={{
-          margin: "15px",
+          margin: "5%",
           textAlign: "left",
         }}
       >
