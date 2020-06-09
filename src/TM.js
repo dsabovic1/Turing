@@ -58,6 +58,7 @@ class TM extends Component {
       trenutnaPozicijaGlave: 1,
       status: "",
       pocetnoStanje: ["q0"],
+      prihvacen: false,
     };
   }
 
@@ -101,6 +102,9 @@ class TM extends Component {
       );
     });
     if (prijelaz === undefined) {
+      console.log(
+        this.state.finalnaStanje.indexOf(this.state.indexTrenutnogStanja)
+      );
       this.setState({
         status: "Ne postoji prijelaz za trenutno stanje i simbol",
       });
@@ -247,23 +251,24 @@ class TM extends Component {
               setSadrzajTrake={this.setSadrzajTrake}
             />
           </div>
-
-          {this.state.trenutnoStanje === this.state.finalnoStanje ? (
-            <h2
-              style={{
-                color: "red",
-              }}
-            >
-              Ulaz nije prihvaćen
-              {this.state.status}
-            </h2>
-          ) : (
+          {this.state.finalnaStanja.indexOf(
+            this.state.stanja[this.state.indexTrenutnogStanja].toString()
+          ) >= 0 ? (
             <h2
               style={{
                 color: "green",
               }}
             >
               Ulaz je prihvaćen
+              {this.state.status}
+            </h2>
+          ) : (
+            <h2
+              style={{
+                color: "red",
+              }}
+            >
+              Ulaz nije prihvaćen
               {this.state.status}
             </h2>
           )}
