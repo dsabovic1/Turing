@@ -56,7 +56,7 @@ class TM extends Component {
       indexTrenutnogStanja: 0,
       indexTrenutnogSimbola: 0,
       indexSljedecegPrijelaza: 0,
-      indexTrenutnogFinalnogStanja: 0,
+      indexTrenutnogFinalnogStanja: -1,
       trenutnaPozicijaGlave: 1,
       status: "",
       pocetnoStanje: ["q0"],
@@ -325,7 +325,9 @@ class TM extends Component {
               }}
             >
               Ulaz je prihvaćen
-              {this.state.status}
+              {this.state.status
+                ? this.state.status + ". TM se nalazi u finalnom stanju"
+                : ""}
             </h2>
           ) : (
             <h2
