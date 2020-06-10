@@ -23,12 +23,13 @@ class TM extends Component {
     this.izmjeniSimbolPrazneCelije = this.izmjeniSimbolPrazneCelije.bind(this);
     this.postaviFinalnaStanja = this.postaviFinalnaStanja.bind(this);
     this.reinit = this.reinit.bind(this);
+    this.postaviBrzinu = this.postaviBrzinu.bind(this);
 
     this.state = {
       stanja: ["q0", "q1"],
       simboli: ["0", "1"],
       simbolPrazneCelije: "_",
-      finalnaStanja: ["q0"],
+      finalnaStanja: ["q1"],
       prijelazi: [
         {
           trenutnoStanje: "q0",
@@ -63,6 +64,7 @@ class TM extends Component {
       pocetnoStanje: ["q0"],
       prihvacen: false,
       ok: 1,
+      brzina: 1,
     };
   }
 
@@ -203,6 +205,12 @@ class TM extends Component {
     });
   }
 
+  postaviBrzinu(value) {
+    this.setState({
+      brzina: value,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -236,7 +244,6 @@ class TM extends Component {
               margin: "15px",
               padding: "10px",
               backgroundColor: "rgba(0,0,0,0.8)",
-              zaustavi: "auto",
               maxWidth: "100%",
               boxShadow: "2px 2px 7px black",
             }}
@@ -258,7 +265,6 @@ class TM extends Component {
               margin: "15px",
               padding: "10px",
               backgroundColor: "rgba(0,0,0,0.8)",
-              zaustavi: "auto",
               maxWidth: "100%",
               boxShadow: "2px 2px 7px black",
             }}
@@ -274,6 +280,31 @@ class TM extends Component {
                 }}
               />
             </ListRow>
+          </div>
+          <div>
+            <div
+              style={{
+                margin: "15px",
+                padding: "10px",
+                backgroundColor: "rgba(0,0,0,0.8)",
+                maxWidth: "100%",
+                boxShadow: "2px 2px 7px black",
+              }}
+            >
+              <label>
+                <h3 style={{ color: "white", paddingLeft: "5px" }}>
+                  Brzina (broj instrukcija po sekundi)
+                </h3>
+                <ListRow>
+                  <EditableField
+                    value={this.state.brzina}
+                    setValue={(value) => {
+                      this.postaviBrzinu(value);
+                    }}
+                  />
+                </ListRow>
+              </label>
+            </div>
           </div>
           <div
             style={{
@@ -296,7 +327,11 @@ class TM extends Component {
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
             simbolPrazneCelije={this.state.simbolPrazneCelije}
           />
-          <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} reinit={this.reinit} />
+          <Kontrole
+            izvrsiPrijelaz={this.izvrsiPrijelaz}
+            reinit={this.reinit}
+            brzina={this.state.brzina}
+          />
 
           {this.state.ok === 1 ? (
             ""

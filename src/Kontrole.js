@@ -11,7 +11,6 @@ class Kontrole extends Component {
 
     this.state = {
       intervalId: null,
-      brzina: 1,
     };
   }
 
@@ -28,9 +27,10 @@ class Kontrole extends Component {
   }
 
   pokreni() {
+    console.log(this.props.brzina);
     let intervalId = window.setInterval(
       this.izvrsiPrijelaz,
-      (1 / this.state.brzina) * 1000
+      (1 / this.props.brzina) * 1000
     );
     this.setState({ intervalId: intervalId });
   }
