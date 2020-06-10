@@ -98,53 +98,56 @@ class TM extends Component {
 
   izvrsiPrijelaz() {
     this.validacija();
-    let prijelaz = this.state.prijelazi.find((prijelaz) => {
-      return (
-        prijelaz.trenutnoStanje ===
-          this.state.stanja[this.state.indexTrenutnogStanja] &&
-        prijelaz.simbolNaTraci ===
-          this.state.sadrzajTrake[this.state.trenutnaPozicijaGlave]
-      );
-    });
-    if (prijelaz === undefined) {
+    if (this.state.ok === 1) {
+      let prijelaz = this.state.prijelazi.find((prijelaz) => {
+        return (
+          prijelaz.trenutnoStanje ===
+            this.state.stanja[this.state.indexTrenutnogStanja] &&
+          prijelaz.simbolNaTraci ===
+            this.state.sadrzajTrake[this.state.trenutnaPozicijaGlave]
+        );
+      });
+      if (prijelaz === undefined) {
+        console.log(
+          this.state.finalnaStanja.indexOf(this.state.indexTrenutnogStanja)
+        );
+        this.setState({
+          status: "Ne postoji prijelaz za trenutno stanje i simbol",
+        });
+      }
+      let noviNizSimbola = this.state.sadrzajTrake.slice();
+      let novaPozicijaGlave;
+      if (
+        noviNizSimbola[this.state.trenutnaPozicijaGlave] ===
+        this.state.simbolPrazneCelije
+      ) {
+        if (prijelaz.smjerKretanja === "R") {
+          noviNizSimbola.push(this.state.simbolPrazneCelije);
+          noviNizSimbola[this.state.trenutnaPozicijaGlave] =
+            prijelaz.noviSimbol;
+          novaPozicijaGlave = this.state.trenutnaPozicijaGlave + 1;
+        } else {
+          noviNizSimbola.unshift(this.state.simbolPrazneCelije);
+          noviNizSimbola[this.state.trenutnaPozicijaGlave + 1] =
+            prijelaz.noviSimbol;
+          novaPozicijaGlave = this.state.trenutnaPozicijaGlave;
+        }
+      } else {
+        noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
+        novaPozicijaGlave =
+          this.state.trenutnaPozicijaGlave +
+          (prijelaz.smjerKretanja === "L" ? -1 : 1);
+      }
       this.setState({
-        status: "! Ne postoji prijelaz za trenutno stanje i simbol",
+        indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
+        sadrzajTrake: noviNizSimbola,
+        trenutnaPozicijaGlave: novaPozicijaGlave,
+        indexTrenutnogSimbola: this.state.simboli.indexOf(
+          this.state.sadrzajTrake[novaPozicijaGlave]
+        ),
+        indexSljedecegPrijelaza: this.state.prijelazi.indexOf(prijelaz),
       });
     }
-    let noviNizSimbola = this.state.sadrzajTrake.slice();
-    let novaPozicijaGlave;
-    if (
-      noviNizSimbola[this.state.trenutnaPozicijaGlave] ===
-      this.state.simbolPrazneCelije
-    ) {
-      if (prijelaz.smjerKretanja === "R") {
-        noviNizSimbola.push(this.state.simbolPrazneCelije);
-        noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
-        novaPozicijaGlave = this.state.trenutnaPozicijaGlave + 1;
-      } else {
-        noviNizSimbola.unshift(this.state.simbolPrazneCelije);
-        noviNizSimbola[this.state.trenutnaPozicijaGlave + 1] =
-          prijelaz.noviSimbol;
-        novaPozicijaGlave = this.state.trenutnaPozicijaGlave;
-      }
-    } else {
-      noviNizSimbola[this.state.trenutnaPozicijaGlave] = prijelaz.noviSimbol;
-      novaPozicijaGlave =
-        this.state.trenutnaPozicijaGlave +
-        (prijelaz.smjerKretanja === "L" ? -1 : 1);
-    }
-    this.setState({
-      indexTrenutnogStanja: this.state.stanja.indexOf(prijelaz.novoStanje),
-      indexTrenutnogFinalnogStanja: this.state.finalnaStanja.indexOf(
-        prijelaz.novoStanje
-      ),
-      sadrzajTrake: noviNizSimbola,
-      trenutnaPozicijaGlave: novaPozicijaGlave,
-      indexTrenutnogSimbola: this.state.simboli.indexOf(
-        this.state.sadrzajTrake[novaPozicijaGlave]
-      ),
-      indexSljedecegPrijelaza: this.state.prijelazi.indexOf(prijelaz),
-    });
   }
 
   setSadrzajTrake(rijec) {
@@ -154,12 +157,33 @@ class TM extends Component {
   }
 
   validacija() {
+    let skupPrijelaza = this.state.prijelazi;
+    for (let i = 0; i < skupPrijelaza.length; i++) {
+      let element = skupPrijelaza[i];
+      if (
+        (this.state.simboli.indexOf(element.simbolNaTraci) === -1 &&
+          element.simbolNaTraci != this.state.simbolPrazneCelije) ||
+        (this.state.simboli.indexOf(element.noviSimbol) === -1 &&
+          element.noviSimbol != this.state.simbolPrazneCelije)
+      ) {
+        this.setState({
+          ok: "Simboli u funkcijama prijelaza nisu iz skupa simbola alfabeta",
+        });
+      }
+      if (
+        this.state.stanja.indexOf(element.trenutnoStanje) === -1 ||
+        this.state.stanja.indexOf(element.novoStanje) === -1
+      ) {
+        this.setState({
+          ok: "Stanja u funkcijama prijelaza nisu iz skupa stanja",
+        });
+      }
+    }
+
     let novaFinalnaStanja = this.state.finalnaStanja;
     for (let i = 0; i < novaFinalnaStanja.length; i++) {
       let element = novaFinalnaStanja[i];
       if (this.state.stanja.indexOf(element) === -1) {
-        novaFinalnaStanja.splice(i, 1);
-        i = 0;
         this.setState({
           ok: "Finalna stanja nisu iz skupa stanja",
         });
@@ -173,24 +197,11 @@ class TM extends Component {
         this.state.simboli.indexOf(element) === -1 &&
         element != this.state.simbolPrazneCelije
       ) {
-        noviSadrzajTrake.splice(i, 1);
-        i = 0;
         this.setState({
           ok: "Simboli na traci nisu iz skupa simbola alfabeta",
         });
       }
     }
-
-    this.setState({
-      finalnaStanja: novaFinalnaStanja,
-      sadrzajTrake: noviSadrzajTrake,
-    });
-  }
-
-  zatvoriPopup() {
-    this.setState({
-      ok: 1,
-    });
   }
 
   reinit() {
