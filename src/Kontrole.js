@@ -7,6 +7,7 @@ class Kontrole extends Component {
     this.izvrsiPrijelaz = this.izvrsiPrijelaz.bind(this);
     this.pokreni = this.pokreni.bind(this);
     this.zaustavi = this.zaustavi.bind(this);
+    this.reinit = this.reinit.bind(this);
 
     this.state = {
       intervalId: null,
@@ -32,6 +33,10 @@ class Kontrole extends Component {
       (1 / this.state.brzina) * 1000
     );
     this.setState({ intervalId: intervalId });
+  }
+
+  reinit() {
+    this.props.reinit();
   }
 
   zaustavi() {
@@ -72,11 +77,7 @@ class Kontrole extends Component {
             onClick={this.izvrsiPrijelaz}
             text="Izvrši jednu iteraciju"
           />
-          <Button
-            big
-            onClick={() => window.location.reload(false)}
-            text="Reinicijalizacija"
-          />
+          <Button big onClick={this.reinit} text="Pokreni ponovo" />
           <div
             style={{
               margin: "10px",

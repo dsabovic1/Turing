@@ -22,6 +22,7 @@ class TM extends Component {
     this.izmjeniPocetnoStanje = this.izmjeniPocetnoStanje.bind(this);
     this.izmjeniSimbolPrazneCelije = this.izmjeniSimbolPrazneCelije.bind(this);
     this.postaviFinalnaStanja = this.postaviFinalnaStanja.bind(this);
+    this.reinit = this.reinit.bind(this);
 
     this.state = {
       stanja: ["q0", "q1"],
@@ -192,6 +193,16 @@ class TM extends Component {
     });
   }
 
+  reinit() {
+    this.setState({
+      prihvacen: false,
+      trenutnaPozicijaGlave: 1,
+      indexSljedecegPrijelaza: 0,
+      indexTrenutnogFinalnogStanja: -1,
+      indexTrenutnogStanja: 0,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -285,7 +296,7 @@ class TM extends Component {
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
             simbolPrazneCelije={this.state.simbolPrazneCelije}
           />
-          <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} />
+          <Kontrole izvrsiPrijelaz={this.izvrsiPrijelaz} reinit={this.reinit} />
 
           {this.state.ok === 1 ? (
             ""
