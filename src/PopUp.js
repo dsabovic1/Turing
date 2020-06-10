@@ -38,36 +38,40 @@ export default class PopUp extends Component {
             left: "25%",
             right: "25%",
             top: "25%",
-            bottom: "60%",
+            height: "170px",
             margin: "auto",
-            minWidth: "100px",
-            backgroundColor: "rgba(250,1,1, 0.6)",
+            minWidth: "200px",
+            maxWidth: "300px",
+            backgroundColor: "white",
 
-            borderRadius: "10px",
+            borderRadius: "5px",
           }}
         >
-          <button
+          <h2
             style={{
-              position: "absolute",
-              marginTop: "0px",
-              marginRight: "0px",
-              marginLeft: "92%",
-
-              backgroundColor: "rgba(1,1,1, 0.4)",
-            }}
-            onClick={this.zatvoriPopUp}
-          >
-            X
-          </button>
-          <h3
-            style={{
-              marginTop: "30px",
               marginLeft: "10px",
-              color: "white",
+
+              color: "red",
+            }}
+          >
+            Došlo je do greške!
+          </h2>
+          <h4
+            style={{
+              marginTop: "20px",
+              marginLeft: "10px",
             }}
           >
             {this.props.ok}
-          </h3>
+          </h4>
+
+          <div
+            style={{
+              marginLeft: "40%",
+            }}
+          >
+            <button onClick={this.zatvoriPopUp}>Zatvori</button>
+          </div>
         </div>
       </div>
     );
