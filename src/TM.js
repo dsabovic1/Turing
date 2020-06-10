@@ -20,6 +20,7 @@ class TM extends Component {
     this.izmjeniPocetnoStanje = this.izmjeniPocetnoStanje.bind(this);
     this.izmjeniSimbolPrazneCelije = this.izmjeniSimbolPrazneCelije.bind(this);
     this.postaviFinalnaStanja = this.postaviFinalnaStanja.bind(this);
+    this.reinit = this.reinit.bind(this);
 
     this.state = {
       stanja: ["q0", "q1"],
@@ -144,6 +145,20 @@ class TM extends Component {
     });
   }
 
+  reinit() {
+    this.setState({
+      trenutnaPozicijaGlave: 1,
+      indexTrenutnogSimbola: this.state.simboli.indexOf(
+        this.state.sadrzajTrake[this.state.trenutnaPozicijaGlave]
+      ),
+      indexTrenutnogStanja: this.stanja.indexOf(this.state.pocetnoStanje),
+      indexTrenutnogFinalnogStanja: this.finalnaStanja.indexOf(
+        this.state.pocetnoStanje
+      ),
+      indexSljedecegPrijelaza: 0,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -233,6 +248,7 @@ class TM extends Component {
           <SadrzajTrake
             sadrzajTrake={this.state.sadrzajTrake}
             setSadrzajTrake={this.setSadrzajTrake}
+            reinit={this.reinit}
             availableSimboli={this.state.simboli}
             trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
             simbolPrazneCelije={this.state.simbolPrazneCelije}
@@ -249,6 +265,7 @@ class TM extends Component {
               trenutnaPozicijaGlave={this.state.trenutnaPozicijaGlave}
               sadrzajTrake={this.state.sadrzajTrake}
               setSadrzajTrake={this.setSadrzajTrake}
+              reinit={this.reinit}
             />
           </div>
           {this.state.finalnaStanja.indexOf(

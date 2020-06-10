@@ -15,7 +15,7 @@ class SadrzajTrake extends Component {
     ar.unshift(this.props.simbolPrazneCelije);
     ar.push(this.props.simbolPrazneCelije);
     this.props.setSadrzajTrake(ar);
-    console.log(ar);
+    this.props.reinit();
   }
 
   render() {
