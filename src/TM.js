@@ -114,7 +114,7 @@ class TM extends Component {
           this.state.finalnaStanja.indexOf(this.state.indexTrenutnogStanja)
         );
         this.setState({
-          status: "Ne postoji prijelaz za trenutno stanje i simbol",
+          status: " Ne postoji prijelaz za trenutno stanje i simbol",
         });
       }
       let noviNizSimbola = this.state.sadrzajTrake.slice();
@@ -370,7 +370,7 @@ class TM extends Component {
                 color: "green",
               }}
             >
-              Ulaz je prihvaćen
+              Ulaz je prihvaćen!
               {this.state.status
                 ? this.state.status + ". TM se nalazi u finalnom stanju"
                 : ""}
@@ -381,7 +381,7 @@ class TM extends Component {
                 color: "red",
               }}
             >
-              Ulaz nije prihvaćen
+              Ulaz nije prihvaćen!
               {this.state.status}
             </h2>
           )}
