@@ -34,22 +34,126 @@ class TM extends Component {
         {
           trenutnoStanje: "q0",
           simbolNaTraci: "0",
-          novoStanje: "q0",
-          noviSimbol: "1",
+          novoStanje: "q1",
+          noviSimbol: "_",
           smjerKretanja: "R",
         },
-
         {
           trenutnoStanje: "q0",
           simbolNaTraci: "1",
-          novoStanje: "q0",
-          noviSimbol: "1",
+          novoStanje: "q2",
+          noviSimbol: "_",
           smjerKretanja: "R",
         },
         {
           trenutnoStanje: "q0",
           simbolNaTraci: "_",
+          novoStanje: "q7",
+          noviSimbol: "_",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q1",
+          simbolNaTraci: "0",
           novoStanje: "q1",
+          noviSimbol: "0",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q1",
+          simbolNaTraci: "1",
+          novoStanje: "q1",
+          noviSimbol: "1",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q1",
+          simbolNaTraci: "_",
+          novoStanje: "q3",
+          noviSimbol: "_",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q2",
+          simbolNaTraci: "0",
+          novoStanje: "q2",
+          noviSimbol: "0",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q2",
+          simbolNaTraci: "1",
+          novoStanje: "q2",
+          noviSimbol: "1",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q2",
+          simbolNaTraci: "_",
+          novoStanje: "q4",
+          noviSimbol: "_",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q3",
+          simbolNaTraci: "0",
+          novoStanje: "q5",
+          noviSimbol: "_",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q3",
+          simbolNaTraci: "1",
+          novoStanje: "q6",
+          noviSimbol: "1",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q3",
+          simbolNaTraci: "_",
+          novoStanje: "q7",
+          noviSimbol: "_",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q4",
+          simbolNaTraci: "0",
+          novoStanje: "q6",
+          noviSimbol: "0",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q4",
+          simbolNaTraci: "1",
+          novoStanje: "q5",
+          noviSimbol: "_",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q4",
+          simbolNaTraci: "_",
+          novoStanje: "q7",
+          noviSimbol: "_",
+          smjerKretanja: "R",
+        },
+        {
+          trenutnoStanje: "q5",
+          simbolNaTraci: "0",
+          novoStanje: "q5",
+          noviSimbol: "0",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q5",
+          simbolNaTraci: "1",
+          novoStanje: "q5",
+          noviSimbol: "1",
+          smjerKretanja: "L",
+        },
+        {
+          trenutnoStanje: "q5",
+          simbolNaTraci: "_",
+          novoStanje: "q0",
           noviSimbol: "_",
           smjerKretanja: "R",
         },
@@ -110,9 +214,6 @@ class TM extends Component {
         );
       });
       if (prijelaz === undefined) {
-        console.log(
-          this.state.finalnaStanja.indexOf(this.state.indexTrenutnogStanja)
-        );
         this.setState({
           status: " Ne postoji prijelaz za trenutno stanje i simbol",
         });
@@ -213,6 +314,7 @@ class TM extends Component {
       indexSljedecegPrijelaza: 0,
       indexTrenutnogFinalnogStanja: -1,
       indexTrenutnogStanja: 0,
+      status: "",
     });
   }
 
@@ -362,29 +464,31 @@ class TM extends Component {
               setSadrzajTrake={this.setSadrzajTrake}
             />
           </div>
-          {this.state.finalnaStanja.indexOf(
-            this.state.stanja[this.state.indexTrenutnogStanja].toString()
-          ) >= 0 ? (
-            <h2
-              style={{
-                color: "green",
-              }}
-            >
-              Ulaz je prihvaćen!
-              {this.state.status
-                ? this.state.status + ". TM se nalazi u finalnom stanju"
-                : ""}
-            </h2>
-          ) : (
-            <h2
-              style={{
-                color: "red",
-              }}
-            >
-              Ulaz nije prihvaćen!
-              {this.state.status}
-            </h2>
-          )}
+          <div>
+            {this.state.finalnaStanja.indexOf(
+              this.state.stanja[this.state.indexTrenutnogStanja].toString()
+            ) >= 0 ? (
+              <h2
+                style={{
+                  color: "green",
+                }}
+              >
+                Ulaz je prihvaćen!
+                {this.state.status
+                  ? this.state.status + ". TM se nalazi u finalnom stanju"
+                  : ""}
+              </h2>
+            ) : (
+              <h2
+                style={{
+                  color: "red",
+                }}
+              >
+                Ulaz nije prihvaćen!
+                {this.state.status}
+              </h2>
+            )}
+          </div>
         </div>
       </div>
     );

@@ -27,7 +27,6 @@ class Kontrole extends Component {
   }
 
   pokreni() {
-    console.log(this.props.brzina);
     let intervalId = window.setInterval(
       this.izvrsiPrijelaz,
       (1 / this.props.brzina) * 1000
